@@ -1,0 +1,1 @@
+Main-Class: pt.ua.ieeta.RNAmfeOpt.main.Main

@@ -1,0 +1,4 @@
+name: mrna-optimiser
+
+dependencies:
+  - anaconda::openjdk
