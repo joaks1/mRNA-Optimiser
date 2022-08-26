@@ -2,6 +2,7 @@ package pt.ua.ieeta.RNAmfeOpt.testing;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Random;
 import pt.ua.ieeta.RNAmfeOpt.optimization.ExternalFitnessAssessor;
 import pt.ua.ieeta.RNAmfeOpt.optimization.GeneSets;
 import pt.ua.ieeta.RNAmfeOpt.optimization.OptimizeCodonSequence;

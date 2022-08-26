@@ -1,5 +1,7 @@
 package pt.ua.ieeta.RNAmfeOpt.sa;
 
+import java.util.Random;
+
 /**
  *
  * @author Paulo Gaspar

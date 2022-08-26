@@ -1,6 +1,7 @@
 
 package pt.ua.ieeta.RNAmfeOpt.sa;
 
+import java.util.Random;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Vector;
