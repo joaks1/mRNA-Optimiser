@@ -21,7 +21,7 @@ public class TestBench4 extends Thread
     private static final int START_AT_GENE = 35;
     private static final String setOfGenes[] = GeneSets.genesRandomSet2;
     private Random rng = new Random();
-    
+
     private double[] accurateEnergyArray;
     
     private int numberOfIterations;
@@ -56,7 +56,7 @@ public class TestBench4 extends Thread
                     try
                     {
                         /* Optimize gene using pseudo energy. */
-                        OptimizeCodonSequence optimizer = new OptimizeCodonSequence(originalSequence, new PseudoEnergyGCContentFitnessAssessor(originalSequence), numberOfIterations, this.rng.nextLong());
+                        OptimizeCodonSequence optimizer = new OptimizeCodonSequence(originalSequence, new PseudoEnergyGCContentFitnessAssessor(originalSequence), numberOfIterations, rng.nextLong());
                         optimizer.start();
                         optimizer.join();
                         String optimizedSequence = ((CodonSequenceOptimizationTarget)optimizer.getSolution().getFeatureList().get(0)).getCodingSequence().toString();

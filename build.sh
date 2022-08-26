@@ -20,6 +20,7 @@ trap clean_up EXIT
 clean_up
 (
     cd "$package_dir"
-    javac pt/ua/ieeta/RNAmfeOpt/main/Main.java
+    # javac pt/ua/ieeta/RNAmfeOpt/main/Main.java
+    javac pt/ua/ieeta/RNAmfeOpt/*/*.java
     jar cvfm mRNAOptimiser.jar manifest.txt pt/ua/ieeta/RNAmfeOpt/*/*.class
 )
