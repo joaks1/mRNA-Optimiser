@@ -66,8 +66,9 @@ public class RNAOptimiser
         printline("Using the " + gctName + " genetic code", false);
         
         /* Optimize sequence using pseudo energy. */
-        printline("\nOptimisation started...", false);
         OptimizeMRNASequence optimizer = new OptimizeMRNASequence(rnaSequence, fitnessCalculator, params);
+        printline("RNG seed: " + optimizer.getRNGSeed(), false);
+        printline("\nOptimisation started...", false);
         optimizer.run(); //running on this thread, instead of launching a new thread.
         printline("Done!\n", false);
         

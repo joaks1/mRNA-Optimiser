@@ -17,6 +17,7 @@ public class OptimizeMRNASequence
     
     /* Parameter list. */
     private EnumMap<OptimiserParameter, Object> params;
+    private long rng_seed;
     
     public OptimizeMRNASequence(String sequence, IFitnessAssessor fitnessCalculator, EnumMap<OptimiserParameter, Object> params)
     {
@@ -31,8 +32,7 @@ public class OptimizeMRNASequence
         
         int geneticCodeTable = (Integer) params.get(OptimiserParameter.GCT);
 
-        long rng_seed = (Long) params.get(OptimiserParameter.RNGSEED);
-        System.out.println("OptimiserParameter RNG seed: " + rng_seed);
+        this.rng_seed = (Long) params.get(OptimiserParameter.RNGSEED);
         
         /* Create seed. */
         List<IOptimizationTarget> optimisationTargetList = new Vector<IOptimizationTarget>();
@@ -41,7 +41,7 @@ public class OptimizeMRNASequence
         EvolvingSolution seed = new EvolvingSolution(optimisationTargetList);
         
         /* Create a new simulated annealing task. */
-        sa = new SimulatedAnnealing(fitnessCalculator, seed, 1, 0.85, 0.2, 0.1, 0.3, rng_seed);
+        sa = new SimulatedAnnealing(fitnessCalculator, seed, 1, 0.85, 0.2, 0.1, 0.3, this.rng_seed);
         
         /* Set all stoping criteria. */
         int maxIterations = (Integer) params.get(OptimiserParameter.MAXITER);
@@ -63,6 +63,11 @@ public class OptimizeMRNASequence
         }
     }
     
+    public long getRNGSeed()
+    {
+        return this.rng_seed;
+    }
+
     public EvolvingSolution getSolution()
     {
         return sa.getSolution();
