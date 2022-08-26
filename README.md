@@ -1,3 +1,32 @@
+This is a fork of
+[Paulo Gaspar's mRNA-Optimiser](https://github.com/bioinformatics-ua/mRNA-Optimiser).
+The purpose of this fork is to enable repeatable results by adding an option of
+providing a seed for random number generation.
+
+How to compile
+==============
+
+First, clone and `cd` into the repo.
+
+    git clone https://github.com/joaks1/mRNA-Optimiser.git
+    cd mRNA-Optimiser
+
+You can use `conda` to create an environment with Java (you can skip these
+steps if you want to use your own installation of Java.
+
+    conda env create -f environment.yml
+    conda activate mrna-optimiser
+
+Lastly, simply run the build script
+
+    ./build.sh
+
+Now, you should be able to run mRNAOptimiser.jar using `-s` to specify a seed
+to get identical results repeatedly
+
+    java -jar mRNAOptimiser.jar -i 10 -s 3741515489481741212 GUCACGUACUGACGUACUGCAGUC
+
+
 mRNA-Optimiser
 ==============
 
@@ -35,3 +64,5 @@ Example usages:
 - `-q`                Don't output anything else than the resulting sequence.
 
 - `-g`                Maintain the same GC content as the original sequence. With this option, the MFE optimization won't be as expressive.
+
+- `-s seed`           Seed for random numbers.
