@@ -11,7 +11,7 @@ public abstract class IOptimizationTarget implements Cloneable
 
     /** Cause this target to mutate (make a change) taking into consideration
      * the current iteration and dispersion factor. */
-    public abstract void performMutation(int k, int kmax, double dispersionFactor);
+    public abstract void performMutation(int k, int kmax, double dispersionFactor, Random rng);
 
     public String getName()
     {

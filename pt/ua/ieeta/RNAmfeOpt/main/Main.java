@@ -52,6 +52,7 @@ public class Main
                                 +"-q                Don't output anything else than the resulting sequence.\n\n"
                                 +"-g                Try keeping the same GC content as the original sequence.\n"
                                 +"                  With this option, the MFE optimization won't be as great.\n"
+                                +"-s                Seed for random number generator.\n\n"
                                 +"";
 
     public static void main(String[] args) throws FileNotFoundException 
@@ -72,6 +73,7 @@ public class Main
         options.addOptionAllSets("c", Separator.BLANK); //genetic code table
         options.addOptionAllSets("q");                  //quiet
         options.addOptionAllSets("g");                  //maintain GC content
+        options.addOptionAllSets("s", Separator.BLANK); //RNG seed
                 
         /* Check if args match the available options. */
         OptionSet set = options.getMatchingSet(false, false);
@@ -150,6 +152,7 @@ public class Main
     private static EnumMap<OptimiserParameter, Object> buildParameterList(OptionSet set, String rnaSequence)
     {
         EnumMap<OptimiserParameter, Object> list = new EnumMap<OptimiserParameter, Object>(OptimiserParameter.class);
+        Random rng = new Random();
         
         try
         {
@@ -164,6 +167,7 @@ public class Main
             list.put(OptimiserParameter.GCT,      set.isSet("c")? Integer.parseInt(set.getOption("c").getResultValue(0)) : OptimiserParameter.GCT.getDefaultValue());
             list.put(OptimiserParameter.QUIET,    set.isSet("q")? true : OptimiserParameter.QUIET.getDefaultValue());
             list.put(OptimiserParameter.KEEPGC,   set.isSet("g")? true : OptimiserParameter.KEEPGC.getDefaultValue());
+            list.put(OptimiserParameter.RNGSEED,  set.isSet("s")? Long.parseLong(set.getOption("s").getResultValue(0)) : rng.nextLong());
         } 
         catch (Exception e)
         {

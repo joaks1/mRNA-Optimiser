@@ -30,6 +30,9 @@ public class OptimizeMRNASequence
         assert (endNuc > startNuc) && ((endNuc  - startNuc + 1)%3 == 0) && (startNuc > 0) && (endNuc > 0);
         
         int geneticCodeTable = (Integer) params.get(OptimiserParameter.GCT);
+
+        long rng_seed = (Long) params.get(OptimiserParameter.RNGSEED);
+        System.out.println("OptimiserParameter RNG seed: " + rng_seed);
         
         /* Create seed. */
         List<IOptimizationTarget> optimisationTargetList = new Vector<IOptimizationTarget>();
@@ -38,7 +41,7 @@ public class OptimizeMRNASequence
         EvolvingSolution seed = new EvolvingSolution(optimisationTargetList);
         
         /* Create a new simulated annealing task. */
-        sa = new SimulatedAnnealing(fitnessCalculator, seed, 1, 0.85, 0.2, 0.1, 0.3);
+        sa = new SimulatedAnnealing(fitnessCalculator, seed, 1, 0.85, 0.2, 0.1, 0.3, rng_seed);
         
         /* Set all stoping criteria. */
         int maxIterations = (Integer) params.get(OptimiserParameter.MAXITER);
@@ -84,6 +87,7 @@ public class OptimizeMRNASequence
         list.put(OptimiserParameter.GCT,       OptimiserParameter.GCT.getDefaultValue());
         list.put(OptimiserParameter.QUIET,     OptimiserParameter.QUIET.getDefaultValue());
         list.put(OptimiserParameter.KEEPGC,    OptimiserParameter.KEEPGC.getDefaultValue());
+        list.put(OptimiserParameter.RNGSEED,   OptimiserParameter.RNGSEED.getDefaultValue());
         
         OptimizeMRNASequence codonSequenceOptimizer = new OptimizeMRNASequence(rnaSequence, new PseudoEnergyFitnessAssessor(), list);
         codonSequenceOptimizer.run();

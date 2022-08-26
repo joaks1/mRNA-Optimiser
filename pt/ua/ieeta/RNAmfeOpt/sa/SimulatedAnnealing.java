@@ -22,6 +22,7 @@ public class SimulatedAnnealing extends Thread
     private IFitnessAssessor fitnessCalculator;
     private EvolvingSolution seed;
     private boolean isMaximizeMode; //is the goal maximizing or minimizing?
+    private Random rng;
     
     /* Neighbour generator. */
     INeighbourGenerator neighbourGenerator = new CodonSequenceNeighbourGenerator(); //new BondsNeighbourGenerator(); 
@@ -35,7 +36,7 @@ public class SimulatedAnnealing extends Thread
     /** Class constructor. Receives some parameters for the simmulated annealing algorithm.
      ** @param fitnessCalculator The class that implements the IFitnessAssessor interface. Responsible for calculating the fitness. 
      ** @param seed The initial object to start from. */
-    public SimulatedAnnealing(IFitnessAssessor fitnessCalculator, EvolvingSolution seed)
+    public SimulatedAnnealing(IFitnessAssessor fitnessCalculator, EvolvingSolution seed, long rng_seed)
     {
         assert fitnessCalculator != null;
         assert seed != null;
@@ -51,6 +52,7 @@ public class SimulatedAnnealing extends Thread
         this.emax = Double.MAX_VALUE;
         this.isMaximizeMode = true;
         this.timemax = Integer.MAX_VALUE;
+        this.rng = new Random(rng_seed);
     }
     
     /** Class constructor. Receives a few parameters for the simmulated annealing algorithm.
@@ -64,7 +66,7 @@ public class SimulatedAnnealing extends Thread
      *                            without evolution. 
      * @param initialDispersionFactor Parameter used when creating mutations. Larger values create larger mutations. 
      * @param mutationAffectedPercent The maximum percentage of features that is affected by mutation in each iteration. */
-    public SimulatedAnnealing(IFitnessAssessor fitnessCalculator, EvolvingSolution seed, int kmax, double coolingSchedule, double convergenceFraction, double initialDispersionFactor, double mutationAffectedPercent)
+    public SimulatedAnnealing(IFitnessAssessor fitnessCalculator, EvolvingSolution seed, int kmax, double coolingSchedule, double convergenceFraction, double initialDispersionFactor, double mutationAffectedPercent, long rng_seed)
     {
         assert fitnessCalculator != null;
         assert seed != null;
@@ -84,6 +86,7 @@ public class SimulatedAnnealing extends Thread
         this.emax = Double.MAX_VALUE;
         this.isMaximizeMode = true;
         this.timemax = Integer.MAX_VALUE;
+        this.rng = new Random(rng_seed);
     }
     
     public void setStopCriteria(int maxiter, int maxtime, double targetenergy, boolean isMaximizeMode)
@@ -162,7 +165,7 @@ public class SimulatedAnnealing extends Thread
               pacceptance = calculateAcceptanceProbability(e, enew, k);
                             
               /* Accept current solution? If it's better, always accept (enew > e) ! */
-              if (isBetterThan(enew, e) || (pacceptance > Math.random()))
+              if (isBetterThan(enew, e) || (pacceptance > this.rng.nextDouble()))
               {
                   s = snew;
                   e = enew;
@@ -271,7 +274,7 @@ public class SimulatedAnnealing extends Thread
         assert solution != null;
         assert !solution.getFeatureList().isEmpty();
                         
-        EvolvingSolution neighbour = neighbourGenerator.getNeighbour(solution, k, kmax, initialDispersionFactor, mutationAffectedPercent);
+        EvolvingSolution neighbour = neighbourGenerator.getNeighbour(solution, k, kmax, initialDispersionFactor, mutationAffectedPercent, this.rng);
         
         if (neighbour == null)
         {

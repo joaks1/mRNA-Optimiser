@@ -18,7 +18,7 @@ public class OptimizeNucleotideBonds extends Thread
 {
     public SimulatedAnnealing sa;
     
-    public OptimizeNucleotideBonds()
+    public OptimizeNucleotideBonds(long rng_seed)
     {
         /* Create seed. */
         List<IOptimizationTarget> featureList = new Vector<IOptimizationTarget>();
@@ -27,7 +27,7 @@ public class OptimizeNucleotideBonds extends Thread
         featureList.add(new BondEnergyOptimizationTarget(2, "GU")); //2
         EvolvingSolution seed = new EvolvingSolution(featureList);
         
-        sa = new SimulatedAnnealing(new RunBondTestBench(), seed);
+        sa = new SimulatedAnnealing(new RunBondTestBench(), seed, rng_seed);
     }
     
     @Override
@@ -52,7 +52,7 @@ public class OptimizeNucleotideBonds extends Thread
     {
         System.out.println("* Starting bond energy optimization experiment *");
         
-        OptimizeNucleotideBonds bondEnergyOptimizer = new OptimizeNucleotideBonds();
+        OptimizeNucleotideBonds bondEnergyOptimizer = new OptimizeNucleotideBonds(123);
         bondEnergyOptimizer.start();
         bondEnergyOptimizer.join();
         

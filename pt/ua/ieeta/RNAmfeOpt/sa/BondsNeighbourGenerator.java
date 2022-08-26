@@ -10,7 +10,7 @@ public class BondsNeighbourGenerator implements INeighbourGenerator
 
     /* Only one bond energy is mutated. "mutationAffectedPercent" is ignored. */
     @Override
-    public EvolvingSolution getNeighbour(EvolvingSolution solution, int k, int kmax, double dispersionFactor, double mutationAffectedPercent)
+    public EvolvingSolution getNeighbour(EvolvingSolution solution, int k, int kmax, double dispersionFactor, double mutationAffectedPercent, Random rng)
     {
         assert solution != null;
         assert solution.getFeatureList() != null;
@@ -22,13 +22,13 @@ public class BondsNeighbourGenerator implements INeighbourGenerator
         EvolvingSolution neighbour = new EvolvingSolution(solution);
         
         /* Calculate a random position, to select which parameter wil be changed. */
-        int randomPos = (int) Math.round(Math.random() * (solution.getFeatureList().size()-1));
+        int randomPos = (int) Math.round(rng.nextDouble() * (solution.getFeatureList().size()-1));
         
         /* Get parameters to optimize. */
         IOptimizationTarget targetToMutate = neighbour.getFeatureList().get(randomPos);
         
         /* Mutate selected parameter, considering the current iteration and dispersion factor. */
-        targetToMutate.performMutation(k, kmax, dispersionFactor);
+        targetToMutate.performMutation(k, kmax, dispersionFactor, rng);
         
         return neighbour;
     }

@@ -14,7 +14,7 @@ public class OptimizeCodonSequence extends Thread
 {
     public SimulatedAnnealing sa;
     
-    public OptimizeCodonSequence(String sequence, IFitnessAssessor fitnessCalculator, int numIterations, int startNuc, int endNuc)
+    public OptimizeCodonSequence(String sequence, IFitnessAssessor fitnessCalculator, int numIterations, int startNuc, int endNuc, long rng_seed)
     {
         assert sequence != null;
         assert fitnessCalculator != null;
@@ -29,13 +29,13 @@ public class OptimizeCodonSequence extends Thread
         targetList.add(new CodonSequenceOptimizationTarget(sequence, 1, startNuc-1, endNuc-1));
         EvolvingSolution seed = new EvolvingSolution(targetList);
         
-        sa = new SimulatedAnnealing(fitnessCalculator, seed, numIterations, 0.85, 0.2, 0.1, 0.3);
+        sa = new SimulatedAnnealing(fitnessCalculator, seed, numIterations, 0.85, 0.2, 0.1, 0.3, rng_seed);
     }
     
-    public OptimizeCodonSequence(String codonSequence, IFitnessAssessor fitnessCalculator, int numIterations)
+    public OptimizeCodonSequence(String codonSequence, IFitnessAssessor fitnessCalculator, int numIterations, long rng_seed)
     {
         /* Default start and end nucleotides are the first and last ones. */
-        this(codonSequence,  fitnessCalculator,  numIterations, 1, codonSequence.length());
+        this(codonSequence,  fitnessCalculator,  numIterations, 1, codonSequence.length(), rng_seed);
     }
     
     @Override
@@ -69,7 +69,7 @@ public class OptimizeCodonSequence extends Thread
 //        String sequence = "AUGGAGGUGGCUGGCUGUUUCUGCAACAUGGAGCUGGGGUGGGGCAUCCCAGUGUCAAAGACUGCAGAGGGGAUUGCUGCACUGCACAGCUUGCAAGCCUUUCCUGAUGACCAGGAGAGUUCCAUAACCAGGUCUGUAGUUCCCACCUUGGCAGACACAGCCAAGCCCUCAGCCCCAGUCACUUCCCACUCCCUGCUCUCCAGGUACCACCCGGGUCAGUGA";
         String sequence = "AUGGAGGUGGCUGGCUGUUUCUGCAACAUG";
 //        OptimizeCodonSequence codonSequenceOptimizer = new OptimizeCodonSequence(sequence, new PseudoEnergyFitnessAssessor(), 4000);
-        OptimizeCodonSequence codonSequenceOptimizer = new OptimizeCodonSequence(sequence, new ExternalFitnessAssessor(new ViennaRNAFold()), 4000);
+        OptimizeCodonSequence codonSequenceOptimizer = new OptimizeCodonSequence(sequence, new ExternalFitnessAssessor(new ViennaRNAFold()), 4000, 123);
         codonSequenceOptimizer.start();
         codonSequenceOptimizer.join();
         

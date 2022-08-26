@@ -78,7 +78,7 @@ public class CodonSequenceOptimizationTarget extends IOptimizationTarget
     }
     
     @Override
-    public void performMutation(int k, int kmax, double dispersionFactor)
+    public void performMutation(int k, int kmax, double dispersionFactor, Random rng)
     {
         assert k >= 0;
         assert kmax > 0;
@@ -98,9 +98,9 @@ public class CodonSequenceOptimizationTarget extends IOptimizationTarget
         StringBuilder sequence = getCodingSequence();
         while (numAffectedCodons > 0)
         {
-            int randomIndex = (int) (Math.random() * numCodons);
+            int randomIndex = (int) (rng.nextDouble() * numCodons);
             String codon = sequence.substring(randomIndex*3, randomIndex*3+3);
-            String newCodon = getSynonymousCodon(codon);
+            String newCodon = getSynonymousCodon(codon, rng);
             
             sequence.replace(randomIndex*3, randomIndex*3+3, newCodon);
             
@@ -111,10 +111,10 @@ public class CodonSequenceOptimizationTarget extends IOptimizationTarget
         }
     }
     
-    private String getSynonymousCodon(String codon)
+    private String getSynonymousCodon(String codon, Random rng)
     {
         Vector<String> codonList = gct.getSynonymousFromCodon(codon);
-        int randomIndex = (int) (Math.random() * codonList.size());
+        int randomIndex = (int) (rng.nextDouble() * codonList.size());
         
         return codonList.get(randomIndex);
     }

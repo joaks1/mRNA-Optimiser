@@ -10,7 +10,7 @@ public class CodonSequenceNeighbourGenerator implements INeighbourGenerator
 
     /* There is only one feature, which is the codon sequence. */
     @Override
-    public EvolvingSolution getNeighbour(EvolvingSolution solution, int k, int kmax, double dispersionFactor, double mutationAffectedPercent)
+    public EvolvingSolution getNeighbour(EvolvingSolution solution, int k, int kmax, double dispersionFactor, double mutationAffectedPercent, Random rng)
     {
         assert solution != null;
         assert solution.getFeatureList() != null;
@@ -25,7 +25,7 @@ public class CodonSequenceNeighbourGenerator implements INeighbourGenerator
         IOptimizationTarget targetToMutate = neighbour.getFeatureList().get(0);
         
         /* Mutate selected parameter, considering the current iteration and dispersion factor. */
-        targetToMutate.performMutation(k, kmax, dispersionFactor);
+        targetToMutate.performMutation(k, kmax, dispersionFactor, rng);
         
         return neighbour;
     }

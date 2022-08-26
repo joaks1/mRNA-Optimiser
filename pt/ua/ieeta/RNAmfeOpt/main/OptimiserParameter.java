@@ -17,7 +17,8 @@ public enum OptimiserParameter
     MAXITER(4000), 
     GCT(1),
     QUIET(false), 
-    KEEPGC(false);
+    KEEPGC(false),
+    RNGSEED(123);
     
     private Object defaultValue;
 

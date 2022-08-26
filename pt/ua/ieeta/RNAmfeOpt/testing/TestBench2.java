@@ -21,6 +21,7 @@ public class TestBench2 extends Thread
     private static final String setOfGenes[] = GeneSets.genesRandomSet6;
     private double AU = 1.011575, CG = 3.117125, GU = 1.008516;
     private double[] accurateEnergyArray, pseudoEnergyArray;
+    private Random rng = new Random();
     
     private int numberOfIterations;
     
@@ -60,7 +61,7 @@ public class TestBench2 extends Thread
                    fAssessor = new PseudoEnergyFitnessAssessor();
                
                 /* Optimize gene. */
-                OptimizeCodonSequence optimizer = new OptimizeCodonSequence(originalSequence, fAssessor, numberOfIterations);
+                OptimizeCodonSequence optimizer = new OptimizeCodonSequence(originalSequence, fAssessor, numberOfIterations, this.rng.nextLong());
                 optimizer.start();
                 optimizer.join();
                 

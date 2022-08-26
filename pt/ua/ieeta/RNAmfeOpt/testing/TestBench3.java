@@ -21,6 +21,7 @@ public class TestBench3 extends Thread
     private static final ExternalPredictor predictor = new UNAFold(); //RNAStructure(); //Pknots(); //UNAFold(); //ViennaRNAFold();
     
     private int numberOfIterations;
+    private Random rng = new Random();
     
     public TestBench3(int numIters)
     {
@@ -44,7 +45,7 @@ public class TestBench3 extends Thread
                     time = System.currentTimeMillis();
                 
                 /* Optimize gene. */
-                OptimizeCodonSequence optimizer = new OptimizeCodonSequence(originalSequence, new ExternalFitnessAssessor(predictor), numberOfIterations);
+                OptimizeCodonSequence optimizer = new OptimizeCodonSequence(originalSequence, new ExternalFitnessAssessor(predictor), numberOfIterations, this.rng.nextLong());
                 optimizer.start();
                 optimizer.join();
                                 

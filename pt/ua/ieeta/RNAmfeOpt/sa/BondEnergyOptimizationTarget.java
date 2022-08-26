@@ -39,7 +39,7 @@ public class BondEnergyOptimizationTarget extends IOptimizationTarget
     }
 
     @Override
-    public void performMutation(int k, int kmax, double dispersionFactor)
+    public void performMutation(int k, int kmax, double dispersionFactor, Random rng)
     {
         assert k >= 0;
         assert kmax > 0;
@@ -50,7 +50,7 @@ public class BondEnergyOptimizationTarget extends IOptimizationTarget
         dispersionFactor = dispersionFactor > 1 ? 1 : dispersionFactor;
 
         /* Calculate the mutation factor. */
-        double unityUniformDistribution = Math.random() - 0.5;
+        double unityUniformDistribution = rng.nextDouble() - 0.5;
         double mutationFactor = unityUniformDistribution * 2 * ((kmax - k) / (double) kmax) * dispersionFactor;
 
         /* Apply mutation. */
