@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.EnumMap;
 import java.util.Scanner;
+import java.util.Random;
 import pt.ua.ieeta.RNAmfeOpt.main.Options.Multiplicity;
 import pt.ua.ieeta.RNAmfeOpt.main.Options.Separator;
 
@@ -149,6 +150,14 @@ public class Main
         prepareTermination(params);
     }
 
+    public static long nextPositiveLong(Random rng) {
+        long n = rng.nextLong();
+        if (n < 0) {
+            n = -n;
+        }
+        return n;
+    }
+
     private static EnumMap<OptimiserParameter, Object> buildParameterList(OptionSet set, String rnaSequence)
     {
         EnumMap<OptimiserParameter, Object> list = new EnumMap<OptimiserParameter, Object>(OptimiserParameter.class);
@@ -167,7 +176,7 @@ public class Main
             list.put(OptimiserParameter.GCT,      set.isSet("c")? Integer.parseInt(set.getOption("c").getResultValue(0)) : OptimiserParameter.GCT.getDefaultValue());
             list.put(OptimiserParameter.QUIET,    set.isSet("q")? true : OptimiserParameter.QUIET.getDefaultValue());
             list.put(OptimiserParameter.KEEPGC,   set.isSet("g")? true : OptimiserParameter.KEEPGC.getDefaultValue());
-            list.put(OptimiserParameter.RNGSEED,  set.isSet("s")? Long.parseLong(set.getOption("s").getResultValue(0)) : rng.nextLong());
+            list.put(OptimiserParameter.RNGSEED,  set.isSet("s")? Long.parseLong(set.getOption("s").getResultValue(0)) : nextPositiveLong(rng));
         } 
         catch (Exception e)
         {
