@@ -32,14 +32,15 @@ public class GeneticCodeTableParser
         assert ID >= 1;
 
         /* Create file readers. */
-        String gctFileName = "geneticCodeTableNCBI.txt";
+        // String gctFileName = "geneticCodeTableNCBI.txt";
         
-        if (gctFileName == null)
-            gctFileName = createDefaultGeneticCodeTable();
-        else if (!new File(gctFileName).exists() || gctFileName.isEmpty())
-                gctFileName = createDefaultGeneticCodeTable();
+        // if (gctFileName == null)
+        //     gctFileName = createDefaultGeneticCodeTable();
+        // else if (!new File(gctFileName).exists() || gctFileName.isEmpty())
+        //         gctFileName = createDefaultGeneticCodeTable();
         
-        BufferedReader br = new BufferedReader(new FileReader(gctFileName));
+        // BufferedReader br = new BufferedReader(new FileReader(gctFileName));
+        BufferedReader br = new BufferedReader(new StringReader(defaultGeneticCodeTable));
 
         String line;
         String name = null, id = null, ncbieaa = null, sncbieaa = null, base1 = null, base2 = null, base3 = null;
@@ -119,22 +120,23 @@ public class GeneticCodeTableParser
         HashMap<Integer, String> names = new HashMap<Integer, String>();
 
         /* Create file readers. */
-        String gctFileName = "geneticCodeTableNCBI.txt";
+        // String gctFileName = "geneticCodeTableNCBI.txt";
         
-        if (gctFileName == null)
-            gctFileName = createDefaultGeneticCodeTable();
-        else if (!new File(gctFileName).exists() || gctFileName.isEmpty())
-                gctFileName = createDefaultGeneticCodeTable();
+        // if (gctFileName == null)
+        //     gctFileName = createDefaultGeneticCodeTable();
+        // else if (!new File(gctFileName).exists() || gctFileName.isEmpty())
+        //         gctFileName = createDefaultGeneticCodeTable();
         
-        BufferedReader br = null;
-        try
-        {
-            br = new BufferedReader(new FileReader(gctFileName));
-        } catch (FileNotFoundException ex)
-        {
-            System.out.println("There was a problem reading the genetic code table file.");
-            return null;
-        }
+        // BufferedReader br = null;
+        // try
+        // {
+        //     br = new BufferedReader(new FileReader(gctFileName));
+        // } catch (FileNotFoundException ex)
+        // {
+        //     System.out.println("There was a problem reading the genetic code table file.");
+        //     return null;
+        // }
+        BufferedReader br = new BufferedReader(new StringReader(defaultGeneticCodeTable));
 
         String line;
         String name = null, id = null;
@@ -181,34 +183,34 @@ public class GeneticCodeTableParser
         return names;
     }
 
-    private String createDefaultGeneticCodeTable() 
-    {
-        String filename = "geneticCodeTableNCBI.txt";
+    // private String createDefaultGeneticCodeTable() 
+    // {
+    //     String filename = "geneticCodeTableNCBI.txt";
         
-        if (filename == null)
-            filename = "geneticCodeTableNCBI";
-        else if (filename.isEmpty())
-            filename = "geneticCodeTableNCBI";
+    //     if (filename == null)
+    //         filename = "geneticCodeTableNCBI";
+    //     else if (filename.isEmpty())
+    //         filename = "geneticCodeTableNCBI";
         
-        File gctFile = new File(filename);
+    //     File gctFile = new File(filename);
         
-        System.out.println("Creating default genetic code table.");
+    //     System.out.println("Creating default genetic code table.");
         
-        try 
-        {
-            gctFile.createNewFile();            
-            BufferedWriter bw = new BufferedWriter(new FileWriter(gctFile));
-            bw.write(defaultGeneticCodeTable);
-            bw.flush();
-            bw.close();
+    //     try 
+    //     {
+    //         gctFile.createNewFile();            
+    //         BufferedWriter bw = new BufferedWriter(new FileWriter(gctFile));
+    //         bw.write(defaultGeneticCodeTable);
+    //         bw.flush();
+    //         bw.close();
             
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            Logger.getLogger(GeneticCodeTableParser.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    //     } catch (IOException ex) {
+    //         ex.printStackTrace();
+    //         Logger.getLogger(GeneticCodeTableParser.class.getName()).log(Level.SEVERE, null, ex);
+    //     }
         
-        return filename;
-    }
+    //     return filename;
+    // }
     
     private static String defaultGeneticCodeTable = "Genetic-code-table ::= {\n"
 +" {\n"
